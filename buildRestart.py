@@ -3,7 +3,7 @@ from restartConfig import getRestartTime
 start, fileName=getRestartTime()
 outputFile = 'test.nml'
 startDate = "start"
-restart = fileName 
+restart = fileName #this doesn't show up as a string
 
 top = '''
  !================================================================!

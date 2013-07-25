@@ -22,7 +22,6 @@ def getRestartTime():
     #we need the times data from the restart file
     ncid = netcdf.netcdf_file(files[latest],'r')
     Times = ncid.variables['Times'].data
-    Name = ncid.variables[''].data
 
     ind = Times.shape[0] - 1
 
@@ -36,4 +35,6 @@ def getRestartTime():
             time += i
     time += "\'"
 
-    return time, files[latest]
+    name="\'{}\'".format(files[latest])
+
+    return time, name
