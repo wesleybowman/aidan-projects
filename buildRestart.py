@@ -1,9 +1,7 @@
 from restartConfig import getRestartTime
 
-start, fileName=getRestartTime()
+start, restart=getRestartTime()
 outputFile = 'test.nml'
-startDate = "start"
-restart = fileName #this doesn't show up as a string
 
 top = '''
  !================================================================!
