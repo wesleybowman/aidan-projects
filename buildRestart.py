@@ -1,4 +1,7 @@
+from restartConfig import getRestartTime
 
+start=getRestartTime()
+print start
 outputFile = 'test.nc'
 start = "'testetstets'"
 restart = "'restartFileName'"
