@@ -2,7 +2,7 @@ from scipy.io import netcdf
 import glob
 
 def getRestartTime():
-    datadir = './'
+    datadir = '/home/daugue6/capeislerestart/output/'
     #get the correct restart file, the second newest one (if there is more than one)
     files = glob.glob(datadir + "*.nc")
     #find the restart files
@@ -22,6 +22,7 @@ def getRestartTime():
     #we need the times data from the restart file
     ncid = netcdf.netcdf_file(files[latest],'r')
     Times = ncid.variables['Times'].data
+    Name = ncid.variables[''].data
 
     ind = Times.shape[0] - 1
 
@@ -35,4 +36,4 @@ def getRestartTime():
             time += i
     time += "\'"
 
-    return time
+    return time, files[latest]
