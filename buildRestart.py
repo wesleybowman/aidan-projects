@@ -1,9 +1,19 @@
 from restartConfig import getRestartTime
 from cp_mv import *
+import time
+import subprocess
+
+date=subprocess.check_output('date')
 
 oldRunFile = 'capeisle_run.nml'
-moveOldTo = './'
-renameOld=''
+start, restartDir = getRestartTime()
+restart = restartDir.split('/')[-1]
+restart = "\'{}" .format(restart)
+outputFile = oldRunFile
+moveOldTo = './test/'
+renameOld='capeisletest{}.nml'.format(start)
+newOutput="\'./output/{}".format(start)
+makeDirectory(newOutput)
 
 try:
     makeDirectory(moveOldTo)
@@ -14,9 +24,6 @@ except OSError as error:
 move(oldRunFile, renameOld)
 move(renameOld, moveOldTo)
 
-start, restartDir = getRestartTime()
-restart = restartDir.split('/')[-1]
-outputFile = oldRunFile
 
 top = '''
  !================================================================!
@@ -56,7 +63,7 @@ change = '''
 
  &NML_IO
  INPUT_DIR       =  './input/'
- OUTPUT_DIR      =  './output'
+ OUTPUT_DIR      =  {2}
  IREPORT         =  720,
  VISIT_ALL_VARS  = F,
  WAIT_FOR_VISIT  = F,
@@ -95,7 +102,7 @@ change = '''
  NC_SURFACE_HEAT = F,
  NC_GROUNDWATER = F
  /
-'''.format(start, restart)
+'''.format(start, restart, newOutput)
 
 rest = '''
  &NML_NETCDF_AV

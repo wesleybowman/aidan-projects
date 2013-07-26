@@ -1,28 +1,30 @@
+
  !================================================================!
-   _______  _     _  _______  _______  _______  ______     _____  
-  (_______)(_)   (_)(_______)(_______)(_______)(_____ \   (_____) 
-   _____    _     _  _        _     _  _  _  _  _____) )  _  __ _ 
+   _______  _     _  _______  _______  _______  ______     _____
+  (_______)(_)   (_)(_______)(_______)(_______)(_____ \   (_____)
+   _____    _     _  _        _     _  _  _  _  _____) )  _  __ _
   |  ___)  | |   | || |      | |   | || ||_|| |(_____ (  | |/ /| |
   | |       \ \ / / | |_____ | |___| || |   | | _____) )_|   /_| |
-  |_|        \___/   \______) \_____/ |_|   |_|(______/(_)\_____/ 
+  |_|        \___/   \______) \_____/ |_|   |_|(______/(_)\_____/
   -- Beta Release
  !                                                                !
  !========DOMAIN DECOMPOSITION USING: METIS 4.0.1 ================!
  !======Copyright 1998, Regents of University of Minnesota========!
  !                                                                !
+ 
 
 
  &NML_CASE
  CASE_TITLE      = 'Cape Isle Site'
  TIMEZONE        = 'UTC',
  DATE_FORMAT     = 'YMD'
- START_DATE      = '2011-09-14 00:45:00'
+ START_DATE      = '2011-09-14 01:00:00.000000'
  END_DATE        = '2011-10-16 00:00:00'
  /
 
  &NML_STARTUP
  STARTUP_TYPE      = 'hotstart'
- STARTUP_FILE      = 'capeisle_restart_0010.nc'
+ STARTUP_FILE      = 'capeisle_restart_0013.nc'
  STARTUP_UV_TYPE   = 'set values'
  STARTUP_TURB_TYPE = 'set values'
  STARTUP_TS_TYPE   = 'constant'
@@ -33,7 +35,7 @@
 
  &NML_IO
  INPUT_DIR       =  './input/'
- OUTPUT_DIR      =  './output'
+ OUTPUT_DIR      =  ./output/'2011-09-14 01:00:00.000000'
  IREPORT         =  720,
  VISIT_ALL_VARS  = F,
  WAIT_FOR_VISIT  = F,
@@ -43,21 +45,21 @@
  &NML_INTEGRATION
  EXTSTEP_SECONDS =  0.5,
  ISPLIT          =  1
- IRAMP           =  34560  
+ IRAMP           =  34560
  MIN_DEPTH       =  0.5
  STATIC_SSH_ADJ  =  0.0
  /
 
  &NML_RESTART
  RST_ON  = T,
- RST_FIRST_OUT      = '2011-09-15 00:00:00'
+ RST_FIRST_OUT      = '2011-09-14 01:00:00.000000'
  RST_OUT_INTERVAL   = 'days = 1.0'
  RST_OUTPUT_STACK   =           1
  /
 
  &NML_NETCDF
  NC_ON   = T,
- NC_FIRST_OUT    = '2011-09-14 00:45:00',
+ NC_FIRST_OUT    = '2011-09-14 01:00:00.000000'
  NC_OUT_INTERVAL =  'seconds=600.0',
  NC_OUTPUT_STACK =  0,
  NC_GRID_METRICS = T,
@@ -72,6 +74,7 @@
  NC_SURFACE_HEAT = F,
  NC_GROUNDWATER = F
  /
+
 
  &NML_NETCDF_AV
  NCAV_ON = F,
@@ -119,7 +122,7 @@
  BAROCLINIC_PRESSURE_GRADIENT    = 'sigma levels'
  SEA_WATER_DENSITY_FUNCTION      = 'dens2'
  RECALCULATE_RHO_MEAN           = F
- INTERVAL_RHO_MEAN              = 'seconds=1800.' 
+ INTERVAL_RHO_MEAN              = 'seconds=1800.'
  TEMPERATURE_ACTIVE              = F,
  SALINITY_ACTIVE                 = F,
  SURFACE_WAVE_MIXING             = F,
@@ -216,5 +219,4 @@ OUT_SALT_TEMP =F,
 OUT_WIND_VELOCITY=F,
 OUT_INTERVAL= 'seconds=1000.0'
  /
-
 
