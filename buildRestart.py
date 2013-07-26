@@ -1,5 +1,5 @@
 from restartConfig import getRestartTime
-from cv_mv import *
+from cp_mv import *
 
 oldRunFile = 'capeisle_run.nml'
 moveOldTo = './'
