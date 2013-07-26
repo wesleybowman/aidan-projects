@@ -1,8 +1,9 @@
 from restartConfig import getRestartTime
 from cv_mv import *
 
-oldRunFile = './fvcom2d_noturbine'
+oldRunFile = 'capeisle_run.nml'
 moveOldTo = './'
+renameOld=''
 
 try:
     makeDirectory(moveOldTo)
@@ -10,9 +11,10 @@ try:
 except OSError as error:
     pass
 
-move(oldRunFile,moveOldTo)
+move(oldRunFile, renameOld)
+move(renameOld, moveOldTo)
 
-start, restartDir=getRestartTime()
+start, restartDir = getRestartTime()
 restart = restartDir.split('/')[-1]
 outputFile = oldRunFile
 
