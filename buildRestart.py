@@ -6,14 +6,16 @@ import subprocess
 date=subprocess.check_output('date')
 
 oldRunFile = 'capeisle_run.nml'
+
 start, restartDir = getRestartTime()
+
 restart = restartDir.split('/')[-1]
 restart = "\'{}" .format(restart)
+
 outputFile = oldRunFile
+
 moveOldTo = './test/'
 renameOld='capeisletest{}.nml'.format(start)
-newOutput="\'./output/{}".format(start)
-makeDirectory(newOutput)
 
 try:
     makeDirectory(moveOldTo)
@@ -63,7 +65,7 @@ change = '''
 
  &NML_IO
  INPUT_DIR       =  './input/'
- OUTPUT_DIR      =  {2}
+ OUTPUT_DIR      =  './ouput/'
  IREPORT         =  720,
  VISIT_ALL_VARS  = F,
  WAIT_FOR_VISIT  = F,
