@@ -13,6 +13,10 @@ def copyDirectory(sourcefile,destination):
 
     shutil.copytree(sourcefile,destination)
 
+def makeDirectory(directoryName):
+
+    os.mkdir(directoryName)
+
 def move(sourcefile,destination):
 
     shutil.move(sourcefile,destination)

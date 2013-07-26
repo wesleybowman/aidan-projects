@@ -1,8 +1,20 @@
 from restartConfig import getRestartTime
+from cv_mv import *
+
+oldRunFile = './fvcom2d_noturbine'
+moveOldTo = './'
+
+try:
+    makeDirectory(moveOldTo)
+
+except OSError as error:
+    pass
+
+move(oldRunFile,moveOldTo)
 
 start, restartDir=getRestartTime()
 restart = restartDir.split('/')[-1]
-outputFile = 'test.nml'
+outputFile = oldRunFile
 
 top = '''
  !================================================================!
