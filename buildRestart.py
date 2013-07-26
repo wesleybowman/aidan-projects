@@ -1,6 +1,7 @@
 from restartConfig import getRestartTime
 
-start, restart=getRestartTime()
+start, restartDir=getRestartTime()
+restart = restartDir.split('/')[-1]
 outputFile = 'test.nml'
 
 top = '''
