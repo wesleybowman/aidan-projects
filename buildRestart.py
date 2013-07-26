@@ -1,11 +1,11 @@
 from restartConfig import getRestartTime
 from cp_mv import *
-import time
 import subprocess
 
 date=subprocess.check_output('date')
 
 oldRunFile = 'capeisle_run.nml'
+oldOutputRunFile = 'run_output{}'.format(start)
 
 start, restartDir = getRestartTime()
 
@@ -14,8 +14,9 @@ restart = "\'{}" .format(restart)
 
 outputFile = oldRunFile
 
-moveOldTo = './test/'
-renameOld='capeisletest{}.nml'.format(start)
+moveOldTo = './runfiles/'
+renameOld='capeisle_run{}.nml'.format(start)
+
 
 try:
     makeDirectory(moveOldTo)
@@ -25,6 +26,7 @@ except OSError as error:
 
 move(oldRunFile, renameOld)
 move(renameOld, moveOldTo)
+move(oldOutputRunFile, moveOldTo)
 
 
 top = '''

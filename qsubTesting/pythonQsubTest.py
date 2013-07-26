@@ -12,11 +12,11 @@ jobID = match.group(0)
 print jobID
 
 match=True
-pattern = r'\b{}\b'.format(jobID) 
+pattern = r'\b{}\b'.format(jobID)
 
 while match:
-	commandQstat = subprocess.check_output(["qstat"])
-	match = re.search(pattern,commandQstat)
-	print 'Still running'
-	time.sleep(5)
+    commandQstat = subprocess.check_output(["qstat"])
+    match = re.search(pattern,commandQstat)
+    print 'Still running'
+    time.sleep(5)
 
