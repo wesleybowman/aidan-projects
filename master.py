@@ -1,8 +1,14 @@
 ''' master file '''
+
+''' imports needed for doing bash commands in python '''
 import os
 import shutil
+
+''' imports needed for getRestartTime '''
 from scipy.io import netcdf
 import glob
+
+''' imports needed for email '''
 import smtplib
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
@@ -49,11 +55,11 @@ def mail(gmail_user,gmail_pwd,to, subject='ACE-net job status', text='Run has st
     mailServer.ehlo()
     mailServer.login(gmail_user, gmail_pwd)
     mailServer.sendmail(gmail_user, to, msg.as_string())
-    # Should be mailServer.quit(), but that crashes...
     mailServer.close()
 
 def readInFiles():
-    '''Read in the email and password'''
+    ''' Read in the email and password. A userInfo.txt file is needed in the
+        same directory. userInfo.txt has the users email and password in it. '''
 
     with open("userInfo.txt",'r') as f:
         user=f.readline()
