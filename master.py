@@ -3,6 +3,9 @@ import os
 import shutil
 from scipy.io import netcdf
 import glob
+import smtplib
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEText import MIMEText
 
 def copySingleFile(sourcefile,destination):
 
@@ -27,6 +30,39 @@ def removeSingleFile(sourcefile):
 def removeDirectory(sourcefile):
 
     shutil.rmtree(sourcefile)
+
+def mail(gmail_user,gmail_pwd,to, subject='ACE-net job status', text='Run has started'):
+    ''' Sends an email from a gmail account to a user with a subject and a
+        message '''
+
+    msg = MIMEMultipart()
+
+    msg['From'] = gmail_user
+    msg['To'] = to
+    msg['Subject'] = subject
+
+    msg.attach(MIMEText(text))
+
+    mailServer = smtplib.SMTP("smtp.gmail.com", 587)
+    mailServer.ehlo()
+    mailServer.starttls()
+    mailServer.ehlo()
+    mailServer.login(gmail_user, gmail_pwd)
+    mailServer.sendmail(gmail_user, to, msg.as_string())
+    # Should be mailServer.quit(), but that crashes...
+    mailServer.close()
+
+def readInFiles():
+    '''Read in the email and password'''
+
+    with open("userInfo.txt",'r') as f:
+        user=f.readline()
+        passwd=f.readline()
+        user = user.rstrip('\n')
+        passwd = passwd.rstrip('\n')
+
+    return user,passwd
+
 
 def getRestartTime():
 
