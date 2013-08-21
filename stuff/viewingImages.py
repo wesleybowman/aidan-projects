@@ -142,6 +142,7 @@ class plotter:
 if __name__ == '__main__':
 
     #savedir = '/home/aidan/thesis/plots/ncplots/gp/regionspeedtest/jul27-0-5/'
+    #savedir = glob.glob('/home/aidan/thesis/plots/ncplots/gp/regionspeedtest/jul27-0-5/*.png')
     savedir = glob.glob('/home/wesley/github/honours/goodImages/slides/*.png')
     print(savedir)
     #nplot = 10
