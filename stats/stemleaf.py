@@ -21,7 +21,7 @@ def stemleafpairs(data, Round=False, byFive=False, stempos= 0, leafwidth=1):
     """
 
     stem10 = pow(10, stempos)
-    leaf10 = 10**leafwidth
+    leaf10 = pow(10,leafwidth)
 
     output = []
 
@@ -81,21 +81,13 @@ def stemleafpairs(data, Round=False, byFive=False, stempos= 0, leafwidth=1):
 
 if __name__ == '__main__':
 
-    file1 = '1950life.txt'
-    file2 = '2012life.txt'
-    data1 =  np.loadtxt(file1)
-    data2 =  np.loadtxt(file2)
+    data = np.random.random_integers(12,50,100)
 
     '''
     Examples:
-    #Pairs1 = stemleafpairs(data1)
-    #Pairs1 = stemleafpairs(data1, byFive=True, stempos=1)
-    #Pairs1 = stemleafpairs(data1, byFive=True)
+    #Pairs = stemleafpairs(data)
+    #Pairs = stemleafpairs(data, stempos=1)
+    #Pairs = stemleafpairs(data, byFive=True)
     '''
 
-    print '\n'+file1 + '\n'
-    Pairs1 = stemleafpairs(data1, stempos=1)
-
-    print '\n'+file2 + '\n'
-    Pairs2 = stemleafpairs(data2, byFive=True, stempos=1)
-
+    Pairs = stemleafpairs(data, byFive=True, stempos=1)
