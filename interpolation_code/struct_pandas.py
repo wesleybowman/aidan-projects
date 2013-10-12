@@ -199,7 +199,9 @@ if __name__ == "__main__":
 #print 'done'
 
 #Use fortran for the interpolation
-    binss = binss.flatten()
+    '''Get rid of binss.flatten(), and the rest will work fine '''
+    #binss = binss.flatten()
+
     interp_u = np.empty((t,binss.shape[0]))
     interp_v = np.empty((t,binss.shape[0]))
     interp_w = np.empty((t,binss.shape[0]))
@@ -233,6 +235,22 @@ if __name__ == "__main__":
         interp_v[i,closefv[i]:] = np.nan
         interp_w[i,closefv[i]:] = np.nan
 
+    print 'interp_u.shape'
+    print interp_u.shape
+    print 'interp_u[0,:],[:,0],[0,0]'
+    print interp_u[0,:]
+    print '\n'
+    print interp_u[:,0]
+    print '\n'
+    print interp_u[0,0]
+
+    print '\n'
+    print 'interp_u[5,:],[:,5],[5,5]'
+    print interp_u[5,:]
+    print '\n'
+    print interp_u[:,5]
+    print '\n'
+    print interp_u[5,5]
     """
     #Merge together the 2d year long probe files.
     index1 = np.array(times1[0,:])
