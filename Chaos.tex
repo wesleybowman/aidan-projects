@@ -1,0 +1,589 @@
+\documentclass[12pt]{report}
+
+
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usepackage{epsfig}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{tabularx}
+%\usepackage[margin=0.5in]{geometry}
+
+%URL stuff
+\usepackage{url}
+\urlstyle{same}
+
+%Code stuff
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+}
+
+%FlowChart Stuff
+\usetikzlibrary{shapes,arrows}
+\tikzstyle{decision} = [diamond, draw, text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, text width=5em, text centered, rounded corners, minimum height=4em]
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{result}[theorem]{Result}
+\newtheorem{definition}[theorem]{Definition}
+%%theorems and stuff
+
+\theoremstyle{definition}
+\newtheorem{example}{Example}[section]
+%%definitions
+
+\newcommand{\tab}{\hspace*{2em}}
+%tab command
+
+\begin{document}
+\title{Physics 3613: Chaos Lab}
+\date{February 1, 2013}
+\author{Wesley Bowman}
+\maketitle
+\pagebreak
+
+\tableofcontents
+
+\pagebreak
+%
+%
+
+\section*{Introduction}
+\addcontentsline{toc}{section}{Introduction}
+The word chaos is used as a term that describes the complex type of behaviour shown in some systems, but chaos is only one type of behaviour in these systems. This field of study is more generally called nonlinear dynamics, which is the study of the dynamical behaviour of a nonlinear system~\cite{hilborn}. The emphasis is on the nonlinear systems, because without that there is no chaos. With a linear system, the behaviour of the system, even with a complex input, can be described as a sum of responses to simpler inputs. With nonlinear systems, that is not the case, and a small change in the parameters can lead to dramatic changes in the system. Nonlinear systems are so intriging because almost all real world systems are in some way nonlinear. 
+
+The word chaos comes from the dramatic changes in the system. Chaos is used to describe the time behaviour of a system when that behaviour is aperiodic and is apparently noisy. Although these systems seem to be chaotic, they are really deterministic, meaning that there is no randomness involved in the development  of the future states of the system. A system is said to be deterministic if knowledge of the time-evolution equations, the parameters that describe the system, and the initial conditions, in principle, completely determine the subsequent behaviour of the system~\cite{hilborn}. Chaos provides an explanation to the apparent randomness of the system. 
+
+The two systems examined in this lab were the logistic equation, which is used to model population growth, and an electric circuit comprised of a diode and an inductor that was powered by a function generator. The logistic equation is a simple equation which results in chaos, and it is shown in Equation~\ref{logisticequation}.
+\begin{equation}
+x_{n+1}=Ax_n(1-x_n)
+\label{logisticequation}
+\end{equation}
+
+In Equation~\ref{logisticequation}, $A$ is some number that depends on the conditions of the environment, and $x_n$ is the population as a fraction of the   number of the population in the $n^{th}$ year over the maximum population $\left(x_n=\frac{N_n}{N^{max}}\right)$ The logistic equation is an iterating function since it relies on the previous value of x to get the proceeding value; this means that given an initial condition, $x_0$, all proceeding values ($x_1,x_2,\dots$) can be found.
+
+The logistic equation has numerous bifurcation points. Bifurcation means the splitting of a main body into two parts. The bifurcation points will be looked at more closely later in the report.  From the logistic equation and it's bifuracation points, Mitchell Feigenbaum used Equation~\ref{feigenbaum} to calculate what is now know as the Feigenbaum constant, shown in Equation~\ref{constant}. 
+\begin{equation}
+\delta_n=\frac{A_n-A_{n-1}}{A_{n+1}-A_n}
+\label{feigenbaum}
+\end{equation}
+
+\begin{equation}
+\lim_{n\rightarrow \infty} \delta_n=4.669
+\label{constant}
+\end{equation}
+
+This constant is the same for every chaotic system that corresponds to this description~\cite{chaos}, making it  analogous to $\pi$ in geometry or $e$ in calculus. Using Equation~\ref{infinity}, $A_\infty$ can be calculated, which is the parameter value at which chaos should appear. 
+
+\begin{equation}
+A_\infty=(A_2-A_1)\frac{1}{\delta-1}+A_2
+\label{infinity}
+\end{equation}
+
+The second chaotic system tested was the electrical circuit, and the circuit used is shown in Figure~\ref{circuit}. Chaos happens in this electronic circuit because of the inductor, which provides an extra degree of freedom needed to make chaos possible in the system. A degree of freedom is a variable needed to describe the behaviour of the system.  Without the inductor, the behaviour of the current and potiential differences in the circuit are so tightly linked together that chaos cannot occur~\cite{hilborn}. The diode contributes to the chaotic behaviour as well. In the process of switching bias, the diode has a reverse-recovery time, which is usually on the order of a few microseconds. In other words, for a few microseconds, a diode will allow current to go through it, even when it is in reverse bias. The diode also has an internal capacitance that plays a role in the road to chaos, which is usually around 100 picofarads. The inductor in combination with the diode's electrical capacitance picks out a frequency for the oscillations of the circuits current and voltage values. When the period of these oscillations is about the same as the reverse-recovery time of the diode, then the current and voltage are changing rapidly enough that the nonlinear effects associated with the switching from forward-bias to reverse-bias become important and chaos becomes possible. 
+
+
+%
+%_________________________________________________________________________________%
+%
+
+\section*{Procedure}
+\addcontentsline{toc}{section}{Procedure}
+
+A LabView program was provided so that a bifurcation plot of the logistic equation could be seen. For this program, an initial value for $x$ was provided along with the interval of A that needed to be plotted. These plots were then redone in Libreoffice to get a better view of the data, which can be seen in Figures~\ref{log01}, \ref{log13}, \ref{log3.2}, \ref{log3.45}, and \ref{log3.6}. All tables and figures can be found in Appendixes I and II respectively. 
+
+There were two values chosen for $x_0$: 0.4 and 0.8. These values were chosen because they seemed to be a good generalization of the values between 0 and 1. To compare the values obtained from LabView, another program was written in Python that would take in an $x_0$ value, and for a given $A$, would iterate through Equation~\ref{logisticequation} to find the convergence. The program is included in Appendix III, and the figures made by this program are shown in Figures~\ref{fig:A0.5}, \ref{fig:A_1}, \ref{fig:A_2}, \ref{fig:A_3_2}, \ref{fig:A_3_45}, and \ref{fig:A_3_6}. Only one value of $x_0$ is included due to the similarities between each of the $x_0$ plots.
+
+The same steps were done for the sine map, given by Equation~\ref{sine}, except this time a comparison was being made between the logistic map  and the sine map, so a Python program was not needed. 
+
+\begin{equation}
+x_{n+1}=A\sin{(\pi x_n)}
+\label{sine}
+\end{equation}
+
+The LabView plots were recreated in Libreoffice and can be seen in Figures~\ref{sin01}-\ref{sin3.6}. The $A$ values taking here went from 0 to 4 like the logistical map, but that was not needed. $A$ going from 0 to 1 is what will be looked at. 
+
+The electronic circuit was setup and allowed to rest while the logistic mapping was taking place. This allowed the components in the circuit to settle to help reduce the error in the system. First, the resonance frequency of the circuit had to be found, which required some adjusting on the oscilloscope to see everything properly. When adjusting the voltage, a peak-to-peak of 6 V was used. It was found that using a DC power supply connected to the function generator would allow a minute change to the frequency. With this first method of trying to find the period doubling events in the electronic circuit, the amplitude of the voltage was set, and the frequency was adjusted. This can be seen in Equation~\ref{functiongenerator}, where $V_0$ is the amplitude of the generator's voltage, and $f$ is the frequency of the signal \cite{hilborn}.
+
+%Signal generator equation, pg. 27 Hilborn
+\begin{equation}
+v(t)=V_0\sin{2\pi ft}
+\label{functiongenerator}
+\end{equation}
+
+In the second method for finding the period doubling events, the frequency was set to a constant value, and the amplitude of the signal was varied. The amplitude was set to be as low as it could be while still being able to see a sine wave being formed on the oscilloscope. Finding the resonance of the circuit like this was more difficult, as at such low voltages the frequency was difficult to pin point, and when resonance was seemingly hit, it would degenerate into noise quickly. 
+
+
+%
+%_________________________________________________________________________________%
+%
+
+\section*{Experimental Results and Discussion}
+\addcontentsline{toc}{section}{Experimental Results}
+
+The logistic equation has different convergence points for different values of $A$. This is due to fixed points, and, in the logistic equation, there are two fixed points in general. The first is $x_0=0$, and the second is given by Equation~\ref{fixedpoint}. 
+
+\begin{equation}
+x_A=1-\frac{1}{A}
+\label{fixedpoint}
+\end{equation}
+
+For all values of $A<1$, the logistic map should converge to 0, and for $A>1$, both fixed points will fall in the range between 0 and 1 \cite{hilborn}. In Figure~\ref{fig:A0.5}, it is shown that with an $A<0$, the map converges to 0. In Figure~\ref{fig:A_1}, $A$ is equal to exactly 1, and it too converges to zero as the iterations go to infinity. In Figure~\ref{fig:A_2}, $A$ is greater than 1, and the values should no longer converge to 0, which is shown. If the values are compared from the Python program to the Labview program, when $A=2$, the values converge at 0.5 in the Python program, and looking at Figure~\ref{log01}, at $A=2$ the LabView program also gave a value of 0.5.
+
+ In Figure~\ref{fig:A_3_2}, the first bifurcation occured, and the period-2 behaviour was observed. In Figure~\ref{fig:A_3_45}, the second bifurcation occured revealing the period-4 behaviour of the system. In Figure~\ref{fig:A_3_6}, there was no longer anyway to tell how many bifurcations there were, and this was because chaos had begun. Looking at where these bifurcation values occurs in Figures~\ref{fig:0_A_4} and \ref{fig:0_A_4_close_up}, the Feigenbaum numbers could be calculated. Equation~\ref{delta1} shows this for $\delta_1$.
+
+\begin{equation}
+\delta_1 = \frac{A_1-A_0}{A_2-A_1}= \frac{3-1}{3.45-3}=4.444
+\label{delta1}
+\end{equation}
+
+This was done using Equation~\ref{feigenbaum},  and the remainder of the values were calculated in the same way. All of the results are shown in Table~\ref{feigenbaumlogistic}. The mean, standard deviation, standard error, and percent difference from the known value of $\delta$ is shown in Table~\ref{stdevfeigen}. Using the bifurcation values in Table~\ref{feigenbaumlogistic} with Equation~\ref{infinity}, the experimentally obtained value at which the system should degenerate into chaos could be calculated.
+
+\begin{equation}
+A_\infty = (3.45-3)\frac{1}{\delta-1}+3.45, \quad \text{ where $\delta$=4.6692016091029 \cite{hilborn}.} 
+\label{infinitylog}
+\end{equation}
+
+\begin{equation}
+A_\infty =  3.5724
+\label{infinitylog2}
+\end{equation}
+
+The experimental value corresponds with the result seen in Figure~\ref{fig:A_3_6} being chaotic. The actual value for $A_\infty$ is 3.5699, which is also consistant with the results obtained from both programs \cite{hilborn}. 
+
+The same calculations were performed for the sine map to find the Feigenbaum numbers, and are shown in Table~\ref{feigenbaumsine} and \ref{stdevfeigensine}. $A_\infty$ was calculated in Equation~\ref{infinitysine}, and is consistant with what is shown in Figure~\ref{fig:sine_0_A_1_closeup}.
+
+\begin{equation}
+A_\infty = (0.835-0.718)\frac{1}{\delta-1}+0.835=0.8669
+\label{infinitysine}
+\end{equation}
+
+Looking at the logistic map and the sine map in Figures~\ref{fig:0_A_4} and \ref{fig:sine_0_A_1}, it is shown that, besides the different scaling of $A$, these bifurcation diagrams are identical. 
+
+The first method used on the electronic circuit was the frequency varying method, where the frequency was varied until the bifurcation points were reached. The resonance frequency was found when the amplitude of the voltage was set to a peak-to-peak voltage of 6 V which is shown in Figure~\ref{resonance}. The resonant frequency was the largest amplitude where the plot started to ring. This is only the first period behaviour of the system which is indicated by the single peak in the XY plot and by the even periods in the Y-plot. This was achieved at a frequency of 25 kHz, and has been known to vary from year to year. When the frequency hit 39.5 kHz, the system showed period-2 behaviour, which is shown in Figure~\ref{period-2}. This was easy to see because of the distinct double peaks in the XY-plot and the two distinct periods in the Y-plot. At 44.4 kHz, the periods bifurcated and a period-4 behaviour was seen. The XY-plot shows these four peaks distinctly, while in the Y-plot there is only a very small distinction between the amplitudes of the tall peaks. Both of these plots are shown in Figure~\ref{period-4}. After the period-4 behaviour was seen, the system went quickly into chaos and the adjustments that needed to be made to see any higher period doubling events were too fine of an adjustment to clearly see anything more.
+The second method used on the electronic circuit was the voltage varying method, where the voltage was set to as low as it could be while still being able to see the sine wave produced by the function generator. The images from this method were very similar to the images shown for method one and hence were excluded from this report. 
+
+The values obtained in method two, along with the values from method one, are shown in Table~\ref{electroniccircuit}. This table also includes the Feigenbaum numbers calculated for both methods. Only one Feigenbaum number could be calculated for each since there were only 3 distinct $A$ values. Therefore our Feigenbaum number was way off of the expected 4.669. If another period doubling event could be found, that would increase the accuracy of the measurement. $A_\infty$ was also calculated and is shown in Table~\ref{electroniccircuit}. The value obtained for $A_\infty$ explains why it was difficult to find more period doubling events that did not seem like chaos. 
+
+
+
+
+
+%
+%_________________________________________________________________________________%
+%
+
+\section*{Conclusion}
+\addcontentsline{toc}{section}{Conclusion}
+
+Chaos arises in most nonlinear dynamic systems. This report only looks are two different systems out of hundreds where chaos can appear. By modelling the logistic equation in LabView and with a program written in Python, the chaos in the logistic equation could be looked at in two different ways to see if the values obtained in each different method corresponded to one another. This allowed for the examination of the different stages of bifurcation and period doubling events. The LabView program was also used to look at the sine mapping, that turned out to have an identical appearance to that of the logistic mapping. This is due to all chaotic systems having the same Feigenbaum number (when $\displaystyle\lim_{n \to\infty}\delta_n$), known as the Feigenbaum constant, which corresponds to the systems decending into chaos at the same rate. 
+
+Using the experimental values obtained from these systems, the experimental Feigenbaum numbers could be calculated and compared to the theoretical value that should be obtained. For both the logistic and sine mapping, the percent difference in the experimental value and the theoretical value was minimal, meaning that the data collected was a good fit to what should happen. 
+
+An electronic circuit that consisted of a function generator, diode, and inductor was also examined. This experiment was more challenging because the values would change between different experiments. A way to increase the accuracy of the experiment would be to take multiple runs of the same method. Another difficulty with this experiment was that fine-tuning the system was extremely difficult, and therefore it was hard to find more than two period doubling events. With only the two period doubling events and the resonance value, only one Feigenbaum number could be calculated, which was different from the expected value.
+
+
+
+
+%_________________________________________________________________________________%
+%								%%%%%%%
+%									%
+%									%
+%									%
+%									%
+%								%%%%%%%
+%_________________________________________________________________________________%
+\pagebreak
+
+\appendix
+\section*{Appendix I }
+\addcontentsline{toc}{section}{Appendix I - Tables}
+%
+%
+
+\begin{table}[htbp]
+\caption{Feigenbaum numbers obtained from the logistic map using Equation~\ref{feigenbaum}.}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ & $A_0$ & \multicolumn{1}{c|}{$A_1$} & \multicolumn{1}{c|}{$A_2$} & \multicolumn{1}{c|}{$A_3$} & $A_4$ \\ \hline
+$A_n$ & \multicolumn{1}{r|}{1.00} & 3.00 & 3.45 & 3.54 & \multicolumn{1}{r|}{3.56} \\ \hline
+$\delta_n$ &  & 4.444 & 5.00 & 4.50 &  \\ \hline
+\end{tabular}
+\label{feigenbaumlogistic}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{The mean, standard deviation, standard error, and the percent difference of the Feigenbaum numbers for the logistic map.}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Mean & Standard Deviation & Standard Error & Percent Difference \\ \hline
+\multicolumn{1}{|c|}{4.647} & \multicolumn{1}{c|}{0.307} & \multicolumn{1}{c|}{0.102} & \multicolumn{1}{c|}{0.473} \\ \hline
+\end{tabular}
+\label{stdevfeigen}
+\end{table}
+
+\begin{table}[htbp]
+\caption{Feigenbaum numbers obtained from the sine map using Equation~\ref{feigenbaum}.}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ & $A_0$ & \multicolumn{1}{c|}{$A_1$} & \multicolumn{1}{c|}{$A_2$} & \multicolumn{1}{c|}{$A_3$} & $A_4$ \\ \hline
+$A_n$ & \multicolumn{1}{r|}{0.33} & 0.718 & 0.835 & 0.86 & \multicolumn{1}{r|}{0.864} \\ \hline
+$\delta_n$ &  & 3.316 & 4.68 & 6.25 &  \\ \hline
+\end{tabular}
+\label{feigenbaumsine}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{The mean, standard deviation, standard error, and the percent difference of the Feigenbaum numbers for the sine map.}
+\begin{tabular}{|c|c|c|c|}
+\hline
+Mean & Standard Deviation & Standard Error & Percent Difference \\ \hline
+\multicolumn{1}{|c|}{4.749} & \multicolumn{1}{c|}{1.468} & \multicolumn{1}{c|}{0.848} & \multicolumn{1}{c|}{1.059} \\ \hline
+\end{tabular}
+\label{stdevfeigensine}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Values experimentally obtained from the electronic circuit for both methods used to find the period doubling events in the system, along with the Feigenbaum numbers found for both methods.}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+ & Constant & Resonance & Period-2 & Period-4 &\multicolumn{1}{c|}{$\delta_n$} & $A_\infty$\\ \hline
+Method 1 & 6 V & 25 kHz & 39.5 kHz & 44.4 kHz & 2.96 &45.74 \\ \hline
+Method 2 & 60 kHz & 8 V & 13 V & 15 V & 2.5&15.55 \\ \hline
+\end{tabular}
+\label{electroniccircuit}
+\end{table}
+
+
+
+\clearpage
+
+%_________________________________________________________________________________%
+%							%%%%%%%%%%%
+%								%		%
+%								%		%
+%								%		%
+%								%		%
+%							%%%%%%%%%%%
+%_________________________________________________________________________________%
+
+
+
+\section*{Appendix II}
+\addcontentsline{toc}{section}{Appendix II - Figures}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=0.5]{figure_A_05}
+\caption{Logisitic map obtained by the Python program using $A=0.5$ and $x_0=0.4$. \label{fig:A0.5}}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=0.5]{figure_A_1}
+\caption{Logisitic map obtained by the Python program using $A=1$ and $x_0=0.4$. \label{fig:A_1}}
+\end{figure}
+
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{log_0_A_1}
+\caption{The LabView program's output of the logistic map when $A$ was varied from 0 to 1. \label{log01}}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=0.5]{figure_A_2}
+\caption{Logisitic map obtained by the Python program using $A=2$ and $x_0=0.4$. \label{fig:A_2}}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{log_1_A_3}
+\caption{The LabView program's output of the logistic map when $A$ was varied from 1 to 3. \label{log13}}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=0.5]{figure_A_3_2}
+\caption{Logisitic map obtained by the Python program using $A=3.2$ and $x_0=0.4$. \label{fig:A_3_2}}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{log_A_3_2}
+\caption{The LabView program's output of the logistic map when $A$ was equal to 3.2. \label{log3.2}}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=0.5]{figure_A_3_45}
+\caption{Logisitic map obtained by the Python program using $A=3.45$ and $x_0=0.4$. \label{fig:A_3_45}}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{log_A_3_45}
+\caption{The LabView program's output of the logistic map when $A$ was equal to 3.45. \label{log3.45}}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=0.5]{figure_A_3_6}
+\caption{Logisitic map obtained by the Python program using $A=3.6$ and $x_0=0.4$. \label{fig:A_3_6}}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{log_A_3_6}
+\caption{The LabView program's output of the logistic map when $A$ was equal to 3.6. \label{log3.6}}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=0.75]{figure_0_A_4}
+\caption{Logisitic map obtained by the Python program using a varying $A$ from 0 to 4 and $x_0=0.4$. \label{fig:0_A_4}}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=0.5]{figure_0_A_4_close_up}
+\caption{A zoomed-in view of the logistic map of a varying $A$ from 0 to 4. \label{fig:0_A_4_close_up}}
+\end{figure}
+
+
+\clearpage
+
+%_________________________________________________________________________________%
+%
+%
+%_________________________________________________________________________________%
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=0.5]{figure_sine_0_A_1}
+\caption{Logisitic map obtained by the Python program using a varying $A$ from 0 to 1 and $x_0=0.4$. \label{fig:sine_0_A_1}}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[scale=0.5]{figure_sine_0_A_1_close_up}
+\caption{A zoomed-in view of the logistic map of a varying $A$ from 0 to 1. \label{fig:sine_0_A_1_closeup}}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{sin_0_A_1}
+\caption{The LabView program's output of the sine map when $A$ was varied from 0 to 1. \label{sin01}}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{sin_1_A_3}
+\caption{The LabView program's output of the sine map when $A$ was varied from 1 to 3. \label{sin13}}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{sin_A_3_2}
+\caption{The LabView program's output of the sine map when $A$ was equal to 3.2. \label{sin3.2}}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{sin_A_3_45}
+\caption{The LabView program's output of the sine map when $A$ was equal to 3.45. \label{sin3.45}}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=\linewidth]{sin_A_3_6}
+\caption{The LabView program's output of the sine map when $A$ was equal to 3.6. \label{sin3.6}}
+\end{figure}
+
+\clearpage
+
+%_________________________________________________________________________________%
+%
+%
+%_________________________________________________________________________________%
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[]{circuit}
+\caption{The circuit diagram of the electronic circuit used, where D1 is the diode, L1 is the inductor, and V1 is the function generator. \cite{MR}. \label{circuit}}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[]{resonance}
+\caption{The XY (right) and Y-plots (left) for the resonance frequency of the circuit for the frequency varied method. \label{resonance}}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[]{period-2}
+\caption{The XY (right) and Y-plots (left) for the period-2 bifurcation point of the circuit for the frequency varied method. \label{period-2}}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[]{period-4}
+\caption{The XY (right) and Y-plots (left) for the period-4 bifurcation point of the circuit for the frequency varied method. \label{period-4}}
+\end{figure}
+
+\clearpage
+
+%_________________________________________________________________________________%
+%							%%%%%%%%%%%
+%								%	%	%
+%								%	%	%
+%								%	%	%
+%								%	%	%
+%							%%%%%%%%%%%
+%_________________________________________________________________________________%
+
+\section*{Appendix III}
+\addcontentsline{toc}{section}{Appendix III - Program}
+
+\begin{lstlisting}
+#
+# Chaos Lab Program
+# Written by: Wesley Bowman
+# 
+
+import matplotlib as mpl
+import numpy as np
+import matplotlib.pyplot as plt
+import os
+
+#Use this to clear the command history in windows, e.g clear()
+clear=lambda: os.system('cls')
+
+#Defining function
+def logistics(x0,A,n=100):
+	'''Iterates through the logistic equation and gives x iteratively'''
+	global x,y
+	x=[]
+	y=[]
+	j=0
+	x.append(A*x0*(1-x0))
+	y.append(j)
+	for i in range(0,n+1):
+		i=A*x[i]*(1-x[i])
+		x.append(i)
+		
+		j=j+1
+		y.append(j)
+
+#Using a while loop to continuously ask user for input
+while True:
+
+	#This try except sequence will do the task unless it gets a KeyboardInterupt error, and if it does it
+	#will exit the while loop
+	try:
+		#Clear the screen then inform the user on how to work the program.
+		clear()
+		print "\nTo exit the program press Del then Ctrl+C \n"
+		print "If no N is entered, the default value is 100 \n"
+		
+		#Get user input
+		a=raw_input("x0: ")
+		b=raw_input("A: ")
+		c=raw_input("N: ")
+		#Make user input work with the function defined
+		a=float(a)
+		b=float(b)
+		if c == '':
+			logistics(a,b)
+		else:
+			c=int(c)
+			logistics(a,b,c)
+
+		#run function
+		#logistics(a,b,c)
+
+		#Create Figure
+		fig=plt.figure()
+		ax = fig.add_subplot(111) #only 1 figure, (211) would make 2 figures horizontally
+
+		#ax=plt.axes(xlim=(0,1),ylim=(0,1))   This sets your own axes
+
+		#autoscale axes
+		ax.autoscale()
+
+		#set x and y labels
+		ax.set_ylabel(r'$x_{n+1}$', fontsize=20)
+		ax.set_xlabel(r'$n$', fontsize=20)
+
+		#show grid
+		ax.grid(True)
+
+		#plot the scatter plot
+		plt.scatter(y,x)
+
+		#show the scatter plot
+		plt.show()
+	
+	#Get the KeyboeardInterupt exception to exit the while loop
+	except KeyboardInterrupt as k:
+		print "\n User stopped the program"
+		break
+	
+
+\end{lstlisting}
+%_________________________________________________________________________________%
+
+\pagebreak
+
+%
+%
+
+
+\begin{thebibliography}{9}
+\bibitem{MR}
+Michael Robertson,
+\emph{Introduction to Chaos}. PHYS 3613- Experimental Physics. February 2013. Print.
+
+\bibitem{hilborn}
+Hilborn, Robert C.. \emph{Chaos and nonlinear dynamics: an introduction for scientists and engineers}. 2nd ed. Oxford: Oxford University Press, 2000. Print.
+
+\bibitem{chaos}
+Alligood, Katleen T.., Tim D.. Sauer, and James A.. Yorke. 
+\emph{Chaos: An introduction to dynamical systems}. New-York: Springer, 2000. Print. 
+
+
+\end{thebibliography}
+
+
+\end{document}
