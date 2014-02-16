@@ -116,7 +116,7 @@ class shortest_element_path:
 
         return self.elements, self.coordinates
 
-    def graphGrid(self):
+    def graphGrid(self,narrowGrid=False):
         #nx.draw(self.graph, self.pointIDXY)
         #plt.show()
 
@@ -148,8 +148,9 @@ class shortest_element_path:
 
         maxlat, maxlon = np.max(self.maxcoordinates,axis=0)
         minlat, minlon = np.min(self.mincoordinates,axis=0)
-        ax.set_xlim(minlon,maxlon)
-        ax.set_ylim(minlat,maxlat)
+        if narrowGrid:
+            ax.set_xlim(minlon,maxlon)
+            ax.set_ylim(minlat,maxlat)
 
 
         zz = len(self.elements)
@@ -171,4 +172,6 @@ if __name__ == '__main__':
     test = shortest_element_path(filename)
 
     test.getTargets([[41420,39763],[48484,53441],[27241,24226],[21706,17458],[14587,5416]])
-    test.graphGrid()
+    test.graphGrid(narrowGrid=True)
+
+    element_path, coordinates_path = test.getTargets([[41420,39763]])
